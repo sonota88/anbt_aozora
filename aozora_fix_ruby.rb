@@ -121,19 +121,25 @@ end
 
 if $0 == __FILE__
   
+  if ARGV.size < 2
+    $stderr.puts <<-"EOB"
+Usage:
+  ARGV[0]: file name of aozora text
+  ARGV[1]: file name of output text
+    EOB
+    exit 1
+  end
+  
   include AozoraFixRuby
 
   Header_sep = '-------------------------------------------------------'
   
-  
-  # 入力ファイル
-  textfile = ARGV[0]
-  # 出力ファイル
+  infile = ARGV[0]
   outfile = ARGV[1]
   
   ##  $log_in_output << "処理日時: #{Time.now}"
     
-  src = File.read( textfile )
+  src = File.read( infile )
   header1, header2, temp = src.split( Header_sep )
   
   body, footer = temp.split( /^底本：/s )
